@@ -12,7 +12,7 @@ function App(): JSX.Element {
     onSubmit,
   } = useForecast()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 lg:flex-row">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-2 overflow-scroll bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 lg:flex-row ">
       <Search
         searchInput={searchInput}
         options={options}
@@ -20,11 +20,7 @@ function App(): JSX.Element {
         onLocationSelect={onLocationSelect}
         onSubmit={onSubmit}
       />
-      {forecast && (
-        <div>
-          <Forecast data={forecast} />
-        </div>
-      )}
+      {forecast && <Forecast data={forecast} />}
     </main>
   )
 }
