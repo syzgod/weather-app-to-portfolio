@@ -57,11 +57,11 @@ const Forecast = ({ data }: Props): JSX.Element => {
             </div>
             <div className="flex flex-col">
               <span className="flex items-center justify-center">
-                <WiDirectionUp className="inline-block" size={25} />
+                <WiDirectionUp className="inline-block" size={30} />
                 H: {Math.ceil(today.main.temp_max)}°
               </span>
               <span>
-                <WiDirectionDown className="inline-block" size={25} />
+                <WiDirectionDown className="inline-block" size={30} />
                 L: {Math.floor(today.main.temp_min)}°
               </span>
             </div>
@@ -86,17 +86,19 @@ const Forecast = ({ data }: Props): JSX.Element => {
         </section>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <section className="flex flex-wrap justify-between text-zinc-700">
-            <div className="backdrop-blur-ls mb-5 flex w-[140px] flex-row items-center justify-center rounded bg-white/20 py-4 text-xs font-bold drop-shadow-lg">
-              <FiSunrise />{' '}
-              <span className="ml-1 mr-2">
+            <div className="backdrop-blur-ls flex h-[130px] w-[210px] flex-row items-center justify-center rounded bg-white/20 text-xs font-bold drop-shadow-lg">
+              <FiSunrise size={25} />{' '}
+              <span className="ml-1 mr-2 text-xl">
                 {getFormattedTime(data.city.sunrise)}
               </span>
-              <FiSunset />{' '}
-              <span className="ml-1">{getFormattedTime(data.city.sunset)}</span>
+              <FiSunset size={25} />{' '}
+              <span className="ml-1 text-xl">
+                {getFormattedTime(data.city.sunset)}
+              </span>
             </div>
           </section>
           <InfoTile
-            icon={<WiThermometer size={20} />}
+            icon={<WiThermometer size={30} />}
             info={`${Math.round(today.main.feels_like)}°`}
             description={`Feels ${
               Math.round(today.main.feels_like) < Math.round(today.main.temp)
@@ -106,27 +108,28 @@ const Forecast = ({ data }: Props): JSX.Element => {
             title="Feels like"
           />
           <InfoTile
-            icon={<SiWindicss size={15} />}
-            info={`${Math.ceil(today.wind.speed)} km/h`}
+            icon={<SiWindicss size={20} />}
+            info={`${Math.ceil(today.wind.speed)} m/s`}
             description={`${getWindDirection(
               Math.ceil(today.wind.deg)
-            )}, gusts ${Math.ceil(today.wind.gust)} km/h`}
+            )}, gusts ${Math.ceil(today.wind.gust)} m/s`}
             title="Wind"
+            special="mr-2"
           />
           <InfoTile
-            icon={<WiUmbrella size={15} />}
+            icon={<WiUmbrella size={30} />}
             info={`${Math.round(today.pop * 1000)}%`}
             description={`${getPop(today.pop)}, clouds at ${today.clouds.all}%`}
             title="Precipitation"
           />
           <InfoTile
-            icon={<WiHumidity size={20} />}
+            icon={<WiHumidity size={30} />}
             info={`${today.main.humidity}%`}
             description={getHumidityValue(today.main.humidity)}
             title="Humidity"
           />
           <InfoTile
-            icon={<WiBarometer size={20} />}
+            icon={<WiBarometer size={30} />}
             info={`${today.main.pressure} hPa`}
             description={`${
               Math.round(today.main.pressure) < 1013 ? 'Lower' : 'Higher '
