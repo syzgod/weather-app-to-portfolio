@@ -1,20 +1,34 @@
 import { forecastType } from '../types'
-import { WiDirectionUp, WiDirectionDown } from 'react-icons/wi'
+import {
+  WiDirectionUp,
+  WiDirectionDown,
+  WiThermometer,
+  WiHumidity,
+  WiBarometer,
+  WiUmbrella,
+} from 'react-icons/wi'
 import { FiSunrise, FiSunset } from 'react-icons/fi'
-import { getSunTime } from '../helpers'
+import { SiWindicss } from 'react-icons/si'
+import InfoTile from './InfoTile'
+import {
+  getFormattedTime,
+  getWindDirection,
+  getHumidityValue,
+  getPop,
+} from '../helpers'
 
-type forecastProps = {
+type Props = {
   data: forecastType
 }
 
-const Forecast = ({ data }: forecastProps): JSX.Element => {
+const Forecast = ({ data }: Props): JSX.Element => {
   const today = data.list[0]
 
   const iconURL = `http://openweathermap.org/img/wn/`
 
   return (
-    <div className="my-2 flex h-full flex-col items-center justify-center rounded bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:max-w-[500px] md:px-10 lg:ml-1 lg:h-[500px] lg:p-10">
-      <div className="mx-auto max-w-[450px]">
+    <div className="my-2 flex h-full flex-col items-center justify-center rounded bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg sm:md:max-w-[500px] md:max-w-[500px] md:px-10 lg:ml-1 lg:h-[500px] lg:p-10">
+      <div className="sm:max-w-[478px]">
         <section className="text-center">
           <h2 className="flex items-center justify-center text-4xl font-black">
             {data.city.name}
@@ -53,7 +67,7 @@ const Forecast = ({ data }: forecastProps): JSX.Element => {
             </div>
           </div>
         </section>
-        <section className="backdrop-blur-ls mt-10 mb-5 flex overflow-x-scroll rounded bg-white/20 pb-2">
+        <section className="backdrop-blur-ls mt-10 mb-5 flex overflow-x-scroll rounded bg-white/20 pb-2 sm:max-w-[478px]">
           {data.list.map((item, i) => (
             <div
               key={i}
@@ -70,14 +84,56 @@ const Forecast = ({ data }: forecastProps): JSX.Element => {
             </div>
           ))}
         </section>
-        <section className="flex flex-wrap justify-between text-zinc-700">
-          <div className="backdrop-blur-ls mb-5 flex w-[140px] flex-row items-center justify-center rounded bg-white/20 py-4 text-xs font-bold drop-shadow-lg">
-            <FiSunrise />{' '}
-            <span className="ml-1 mr-2">{getSunTime(data.city.sunrise)}</span>
-            <FiSunset />{' '}
-            <span className="ml-1">{getSunTime(data.city.sunset)}</span>
-          </div>
-        </section>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <section className="flex flex-wrap justify-between text-zinc-700">
+            <div className="backdrop-blur-ls mb-5 flex w-[140px] flex-row items-center justify-center rounded bg-white/20 py-4 text-xs font-bold drop-shadow-lg">
+              <FiSunrise />{' '}
+              <span className="ml-1 mr-2">
+                {getFormattedTime(data.city.sunrise)}
+              </span>
+              <FiSunset />{' '}
+              <span className="ml-1">{getFormattedTime(data.city.sunset)}</span>
+            </div>
+          </section>
+          <InfoTile
+            icon={<WiThermometer size={20} />}
+            info={`${Math.round(today.main.feels_like)}°`}
+            description={`Feels ${
+              Math.round(today.main.feels_like) < Math.round(today.main.temp)
+                ? 'colder'
+                : 'warmer'
+            }`}
+            title="Feels like"
+          />
+          <InfoTile
+            icon={<SiWindicss size={15} />}
+            info={`${Math.ceil(today.wind.speed)} km/h`}
+            description={`${getWindDirection(
+              Math.ceil(today.wind.deg)
+            )}, gusts ${Math.ceil(today.wind.gust)} km/h`}
+            title="Wind"
+          />
+          <InfoTile
+            icon={<WiUmbrella size={15} />}
+            info={`${Math.round(today.pop * 1000)}%`}
+            description={`${getPop(today.pop)}, clouds at ${today.clouds.all}%`}
+            title="Precipitation"
+          />
+          <InfoTile
+            icon={<WiHumidity size={20} />}
+            info={`${today.main.humidity}%`}
+            description={getHumidityValue(today.main.humidity)}
+            title="Humidity"
+          />
+          <InfoTile
+            icon={<WiBarometer size={20} />}
+            info={`${today.main.pressure} hPa`}
+            description={`${
+              Math.round(today.main.pressure) < 1013 ? 'Lower' : 'Higher '
+            }`}
+            title="Pressure"
+          />
+        </div>
       </div>
     </div>
   )
