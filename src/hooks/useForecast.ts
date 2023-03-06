@@ -14,6 +14,7 @@ const useForecast = () => {
   //TODO Feature: Add color indicator if any of the values are too high/low
   //TODO Feature: Add 'toastify' and setup properly to not overcrowd the screen
   //TODO Feature: Implement 'chart' for temperature
+  //TODO Feature: Add indicator which unit(C/F) is active
 
   {
     /* API call for multiple locations with the same name from search input */
