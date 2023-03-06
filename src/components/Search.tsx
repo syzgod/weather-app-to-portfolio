@@ -1,5 +1,5 @@
 import { optionType } from '../types'
-import { ChangeEvent, MouseEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent } from 'react'
 import { MdLocationPin } from 'react-icons/md'
 
 type Props = {
@@ -8,7 +8,8 @@ type Props = {
   options: []
   onLocationSelect: (option: optionType) => void
   onSubmit: (unit: any) => void
-  onSystemSelect: (value: string) => void
+  onUnitSelect: (value: string) => void
+  handleLocationClick: () => void
 }
 
 const Search = ({
@@ -17,7 +18,8 @@ const Search = ({
   options,
   onLocationSelect,
   onSubmit,
-  onSystemSelect,
+  onUnitSelect,
+  handleLocationClick,
 }: Props): JSX.Element => {
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     let unit = e.currentTarget.name
@@ -59,7 +61,7 @@ const Search = ({
                     <span className="text-xs font-thin">{option.state}</span>{' '}
                     <span className="font-bold">{option.country}</span>
                     <img
-                      src={`https://openweathermap.org/images/flags/${option.country.toLowerCase()}.png`}
+                      src={`https://openweathermap.org/images/flags/${option.country!.toLowerCase()}.png`}
                       alt={`${option.country}-flag`}
                       className="ml-1 mr-2 inline-block"
                     />
@@ -82,9 +84,11 @@ const Search = ({
           <button>
             <MdLocationPin
               size={25}
-              className="mx-2 text-gray-200 transition ease-out hover:scale-150"
+              className="ml-1 text-gray-200 transition ease-out hover:scale-150"
+              onClick={handleLocationClick}
             />
           </button>
+          <p className="mx-2 text-2xl text-gray-200">|</p>
           <button
             name="metric"
             className="text-2xl text-gray-200 transition ease-out hover:scale-150"

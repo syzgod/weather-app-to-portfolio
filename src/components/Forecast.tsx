@@ -8,6 +8,7 @@ import {
   WiUmbrella,
 } from 'react-icons/wi'
 import { FiSunrise, FiSunset } from 'react-icons/fi'
+import { FaLocationArrow } from 'react-icons/fa'
 import { SiWindicss } from 'react-icons/si'
 import InfoTile from './InfoTile'
 import {
@@ -121,6 +122,14 @@ const Forecast = ({ data }: Props): JSX.Element => {
           )}, gusts ${Math.ceil(today.wind.gust)} m/s`}
           title="Wind"
           special="mr-2"
+          specialIcon={
+            <FaLocationArrow
+              className="h-6 w-10 origin-center"
+              style={{
+                transform: `rotate(${today.wind.deg + 120}deg)`,
+              }}
+            />
+          }
         />
         <InfoTile
           icon={<WiUmbrella size={30} />}

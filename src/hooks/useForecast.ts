@@ -1,14 +1,23 @@
-import { useState, useEffect, ChangeEvent, MouseEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { optionType, forecastType } from '../types'
-import { toast } from 'react-toastify'
 
 const useForecast = () => {
-  const [searchInput, setSearchInput] = useState<string>('')
+  const [searchInput, setSearchInput] = useState<any>('')
   const [options, setOptions] = useState<[]>([])
   const [location, setLocation] = useState<optionType | null>(null)
   const [forecast, setForecast] = useState<forecastType | null>(null)
-  const [system, setSystem] = useState<string>('metric')
+  const [unit, setUnit] = useState<string>('metric')
 
+  //TODO Bug: Fix geolocation inaccuracy (if possible)
+  //TODO Bug: Fix unit after geolocation not using the default 'metric' value instead using the openweathermap's 'kelvin' default
+  //TODO Bug: Fix m/s => mi/h conversion at wind speed when changing from 'metric' to 'imperial'
+  //TODO Feature: Add color indicator if any of the values are too high/low
+  //TODO Feature: Add 'toastify' and setup properly to not overcrowd the screen
+  //TODO Feature: Implement 'chart' for temperature
+
+  {
+    /* API call for multiple locations with the same name from search input */
+  }
   const getSearchValue = (value: string) => {
     fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${
@@ -17,6 +26,9 @@ const useForecast = () => {
     )
       .then((res) => res.json())
       .then((data) => setOptions(data))
+      .catch((err) => {
+        alert(`Something went wrong, try again. ${err.message}`)
+      })
   }
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,10 +40,12 @@ const useForecast = () => {
     getSearchValue(value)
   }
 
-  const getForecast = (location: optionType, system: string) => {
-    toast.info(`Fetching ${location.name} data`)
+  {
+    /* Get forecast from the API using latitude and longitude */
+  }
+  const getForecast = (location: optionType, unit: string = 'metric') => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=${system}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=${unit}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -41,22 +55,58 @@ const useForecast = () => {
         }
         setForecast(forecastData)
       })
+      .catch((err) => {
+        alert(`Something went wrong, try again. ${err.message}`)
+      })
   }
 
-  const onSubmit = (unit: any) => {
+  const onSubmit = (unit: string = 'metric') => {
     if (!location) return
 
     getForecast(location, unit)
+  }
+
+  {
+    /* Handle selected location from the options list*/
   }
 
   const onLocationSelect = (option: optionType) => {
     setLocation(option)
   }
 
-  const onSystemSelect = (value: string) => {
+  {
+    /* Get the units(metric, imperial) from the buttons we choose */
+  }
+
+  const onUnitSelect = (value: string) => {
     console.log(value)
-    setSystem(value)
-    toast.info(`Units changed to ${value}`)
+    setUnit(value)
+  }
+
+  {
+    /* Get the user's location if clicked on the icon/button */
+  }
+  const handleLocationClick = () => {
+    if (navigator.geolocation) {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      }
+      const success = (pos: any) => {
+        const { latitude: lat, longitude: lon } = pos.coords
+        console.log(lat, lon)
+
+        setLocation({ lat, lon })
+        getForecast({ lat, lon }, 'metric')
+      }
+
+      const error = (err: any) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`)
+      }
+
+      navigator.geolocation.getCurrentPosition(success, error, options)
+    }
   }
 
   useEffect(() => {
@@ -73,7 +123,8 @@ const useForecast = () => {
     onInputChange,
     onLocationSelect,
     onSubmit,
-    onSystemSelect,
+    onUnitSelect,
+    handleLocationClick,
   }
 }
 

@@ -1,7 +1,7 @@
 import Search from './components/Search'
 import Forecast from './components/Forecast'
 import useForecast from './hooks/useForecast'
-import { ToastContainer, Slide, Zoom, Flip, Bounce } from 'react-toastify'
+import { ToastContainer, Flip } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function App(): JSX.Element {
@@ -12,22 +12,23 @@ function App(): JSX.Element {
     onInputChange,
     onLocationSelect,
     onSubmit,
-    onSystemSelect,
+    onUnitSelect,
+    handleLocationClick,
   } = useForecast()
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-2 overflow-scroll bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 lg:flex-row ">
       <ToastContainer
+        limit={4}
         transition={Flip}
         position="top-right"
-        autoClose={2000}
+        autoClose={3000}
         hideProgressBar={false}
-        newestOnTop={true}
+        newestOnTop={false}
         closeOnClick
         rtl={false}
-        limit={3}
         pauseOnFocusLoss
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="colored"
       />
       <Search
@@ -36,7 +37,8 @@ function App(): JSX.Element {
         onInputChange={onInputChange}
         onLocationSelect={onLocationSelect}
         onSubmit={onSubmit}
-        onSystemSelect={onSystemSelect}
+        onUnitSelect={onUnitSelect}
+        handleLocationClick={handleLocationClick}
       />
       {forecast && <Forecast data={forecast} />}
     </main>
