@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent, MouseEvent } from 'react'
 import { optionType, forecastType } from '../types'
+import { toast } from 'react-toastify'
 
 const useForecast = () => {
   const [searchInput, setSearchInput] = useState<string>('')
@@ -9,6 +10,7 @@ const useForecast = () => {
   const [system, setSystem] = useState<string>('metric')
 
   const getSearchValue = (value: string) => {
+    toast(`Fetching ${value} data`)
     fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${
         process.env.REACT_APP_API_KEY
@@ -45,6 +47,7 @@ const useForecast = () => {
     if (!location) return
 
     getForecast(location, system)
+    toast.success(`Location data fetched`)
   }
 
   const onLocationSelect = (option: optionType) => {
@@ -54,6 +57,7 @@ const useForecast = () => {
   const onSystemSelect = (value: string) => {
     console.log(value)
     setSystem(value)
+    toast.info(`Units changed to ${value}`)
   }
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { optionType } from '../types'
-import { ChangeEvent, MouseEvent } from 'react'
+import { ChangeEvent } from 'react'
 
 type Props = {
   searchInput: string
