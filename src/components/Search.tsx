@@ -1,12 +1,13 @@
 import { optionType } from '../types'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
+import { MdLocationPin } from 'react-icons/md'
 
 type Props = {
   searchInput: string
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void
   options: []
   onLocationSelect: (option: optionType) => void
-  onSubmit: () => void
+  onSubmit: (unit: any) => void
   onSystemSelect: (value: string) => void
 }
 
@@ -18,6 +19,11 @@ const Search = ({
   onSubmit,
   onSystemSelect,
 }: Props): JSX.Element => {
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    let unit = e.currentTarget.name
+    onSubmit(unit)
+  }
+
   return (
     <section className="z-50 mb-3 flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
       {/* Title */}
@@ -33,11 +39,11 @@ const Search = ({
         <input
           type="text"
           value={searchInput}
-          className="min-w-full rounded-l-md border-2 border-white px-2 py-1"
+          className="min-w-fit rounded-l-md border-2 border-white px-2 py-1"
           onChange={onInputChange}
         />
         {/* Search results after API call */}
-        <ul className="absolute top-9 -left-7 overflow-hidden rounded-md bg-white">
+        <ul className="absolute top-9 left-1.5 overflow-hidden rounded-md bg-white">
           {options.map((option: optionType, index) => (
             <li
               key={option.name + '-' + index}
@@ -73,10 +79,16 @@ const Search = ({
           search
         </button>
         <div className="ml-4 flex w-1/4 flex-row items-center justify-center">
+          <button>
+            <MdLocationPin
+              size={25}
+              className="mx-2 text-gray-200 transition ease-out hover:scale-150"
+            />
+          </button>
           <button
             name="metric"
             className="text-2xl text-gray-200 transition ease-out hover:scale-150"
-            onClick={() => onSystemSelect('metric')}
+            onClick={onClick}
           >
             C°
           </button>
@@ -84,9 +96,9 @@ const Search = ({
           <button
             name="imperial"
             className="text-2xl text-gray-200 transition ease-out hover:scale-150"
-            onClick={() => onSystemSelect('imperial')}
+            onClick={onClick}
           >
-            °F
+            F°
           </button>
         </div>
       </div>

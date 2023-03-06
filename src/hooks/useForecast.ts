@@ -10,7 +10,6 @@ const useForecast = () => {
   const [system, setSystem] = useState<string>('metric')
 
   const getSearchValue = (value: string) => {
-    toast(`Fetching ${value} data`)
     fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${
         process.env.REACT_APP_API_KEY
@@ -30,6 +29,7 @@ const useForecast = () => {
   }
 
   const getForecast = (location: optionType, system: string) => {
+    toast.info(`Fetching ${location.name} data`)
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=${system}`
     )
@@ -43,11 +43,10 @@ const useForecast = () => {
       })
   }
 
-  const onSubmit = () => {
+  const onSubmit = (unit: any) => {
     if (!location) return
 
-    getForecast(location, system)
-    toast.success(`Location data fetched`)
+    getForecast(location, unit)
   }
 
   const onLocationSelect = (option: optionType) => {
