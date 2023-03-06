@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent, MouseEvent } from 'react'
 import { optionType, forecastType } from '../types'
 
 const useForecast = () => {
@@ -6,6 +6,7 @@ const useForecast = () => {
   const [options, setOptions] = useState<[]>([])
   const [location, setLocation] = useState<optionType | null>(null)
   const [forecast, setForecast] = useState<forecastType | null>(null)
+  const [system, setSystem] = useState<string>('metric')
 
   const getSearchValue = (value: string) => {
     fetch(
@@ -26,9 +27,9 @@ const useForecast = () => {
     getSearchValue(value)
   }
 
-  const getForecast = (location: optionType) => {
+  const getForecast = (location: optionType, system: string) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=${system}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -43,11 +44,16 @@ const useForecast = () => {
   const onSubmit = () => {
     if (!location) return
 
-    getForecast(location)
+    getForecast(location, system)
   }
 
   const onLocationSelect = (option: optionType) => {
     setLocation(option)
+  }
+
+  const onSystemSelect = (value: string) => {
+    console.log(value)
+    setSystem(value)
   }
 
   useEffect(() => {
@@ -56,6 +62,7 @@ const useForecast = () => {
       setOptions([])
     }
   }, [location])
+
   return {
     searchInput,
     options,
@@ -63,6 +70,7 @@ const useForecast = () => {
     onInputChange,
     onLocationSelect,
     onSubmit,
+    onSystemSelect,
   }
 }
 

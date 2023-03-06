@@ -1,5 +1,5 @@
 import { optionType } from '../types'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, MouseEvent } from 'react'
 
 type Props = {
   searchInput: string
@@ -7,6 +7,7 @@ type Props = {
   options: []
   onLocationSelect: (option: optionType) => void
   onSubmit: () => void
+  onSystemSelect: (value: string) => void
 }
 
 const Search = ({
@@ -15,6 +16,7 @@ const Search = ({
   options,
   onLocationSelect,
   onSubmit,
+  onSystemSelect,
 }: Props): JSX.Element => {
   return (
     <section className="z-50 mb-3 flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
@@ -70,6 +72,23 @@ const Search = ({
         >
           search
         </button>
+        <div className="ml-4 flex w-1/4 flex-row items-center justify-center">
+          <button
+            name="metric"
+            className="text-2xl text-gray-200 transition ease-out hover:scale-150"
+            onClick={() => onSystemSelect('metric')}
+          >
+            C°
+          </button>
+          <p className="mx-2 text-2xl text-gray-200">|</p>
+          <button
+            name="imperial"
+            className="text-2xl text-gray-200 transition ease-out hover:scale-150"
+            onClick={() => onSystemSelect('imperial')}
+          >
+            °F
+          </button>
+        </div>
       </div>
     </section>
   )
