@@ -46,33 +46,34 @@ const Search = ({
         />
         {/* Search results after API call */}
         <ul className="absolute top-9 left-1.5 overflow-hidden rounded-md bg-white">
-          {options.map((option: optionType, index) => (
-            <li
-              key={option.name + '-' + index}
-              className="flex justify-between sm:w-80 md:w-96 "
-            >
-              <button
-                className="flex w-full cursor-pointer items-center justify-between border-b border-b-zinc-700/20 px-3 py-1 text-left text-sm hover:bg-zinc-700 hover:text-white"
-                onClick={() => onLocationSelect(option)}
+          {options.length > 0 &&
+            options.map((option: optionType, index) => (
+              <li
+                key={option.name + '-' + index}
+                className="flex justify-between sm:w-80 md:w-96 "
               >
-                <div className="flex">
-                  <div>
-                    <span className="font-bold">{option.name}</span>,{' '}
-                    <span className="text-xs font-thin">{option.state}</span>{' '}
-                    <span className="font-bold">{option.country}</span>
-                    <img
-                      src={`https://openweathermap.org/images/flags/${option.country!.toLowerCase()}.png`}
-                      alt={`${option.country}-flag`}
-                      className="ml-1 mr-2 inline-block"
-                    />
+                <button
+                  className="flex w-full cursor-pointer items-center justify-between border-b border-b-zinc-700/20 px-3 py-1 text-left text-sm hover:bg-zinc-700 hover:text-white"
+                  onClick={() => onLocationSelect(option)}
+                >
+                  <div className="flex">
+                    <div>
+                      <span className="font-bold">{option.name}</span>,{' '}
+                      <span className="text-xs font-thin">{option.state}</span>{' '}
+                      <span className="font-bold">{option.country}</span>
+                      <img
+                        src={`https://openweathermap.org/images/flags/${option.country!.toLowerCase()}.png`}
+                        alt={`${option.country}-flag`}
+                        className="ml-1 mr-2 inline-block"
+                      />
+                    </div>
                   </div>
-                </div>
-                <span className="ml-2 flex flex-shrink-0 text-right text-xs font-normal">
-                  {option.lat.toFixed(3)}, {option.lon.toFixed(3)}
-                </span>
-              </button>
-            </li>
-          ))}
+                  <span className="ml-2 flex flex-shrink-0 text-right text-xs font-normal">
+                    {option.lat.toFixed(3)}, {option.lon.toFixed(3)}
+                  </span>
+                </button>
+              </li>
+            ))}
         </ul>
         <button
           className="cursor-pointer rounded-r-md border-2 border-zinc-100 py-1 px-1 text-zinc-100 hover:border-zinc-700 hover:text-zinc-700"
