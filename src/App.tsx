@@ -3,6 +3,7 @@ import Forecast from './components/Forecast'
 import useForecast from './hooks/useForecast'
 import { ToastContainer, Flip } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import ForecastChart from './components/ForecastChart'
 
 function App(): JSX.Element {
   const {
@@ -12,6 +13,7 @@ function App(): JSX.Element {
     onInputChange,
     onLocationSelect,
     onSubmit,
+    unit,
     onUnitSelect,
     handleLocationClick,
   } = useForecast()
@@ -31,16 +33,19 @@ function App(): JSX.Element {
         pauseOnHover={false}
         theme="colored"
       />
-      <Search
-        searchInput={searchInput}
-        options={options}
-        onInputChange={onInputChange}
-        onLocationSelect={onLocationSelect}
-        onSubmit={onSubmit}
-        onUnitSelect={onUnitSelect}
-        handleLocationClick={handleLocationClick}
-      />
-      {forecast && <Forecast data={forecast} />}
+      <div className="flex flex-col">
+        <Search
+          searchInput={searchInput}
+          options={options}
+          onInputChange={onInputChange}
+          onLocationSelect={onLocationSelect}
+          onSubmit={onSubmit}
+          onUnitSelect={onUnitSelect}
+          handleLocationClick={handleLocationClick}
+        />
+        <ForecastChart />
+      </div>
+      {forecast && <Forecast data={forecast} unit={unit} />}
     </main>
   )
 }

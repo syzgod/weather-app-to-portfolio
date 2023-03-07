@@ -20,9 +20,10 @@ import {
 
 type Props = {
   data: forecastType
+  unit: string | null
 }
 
-const Forecast = ({ data }: Props): JSX.Element => {
+const Forecast = ({ data, unit }: Props): JSX.Element => {
   const today = data.list[0]
 
   const iconURL = `http://openweathermap.org/img/wn/`
@@ -46,7 +47,15 @@ const Forecast = ({ data }: Props): JSX.Element => {
           {data.city.coord.lon.toFixed(3)})
         </span>
         <div className="flex flex-row items-center justify-center">
-          <h1 className="text-7xl">{Math.round(today.main.temp)}°</h1>
+          <h1
+            className={`text-7xl ${
+              unit === 'metric' && Math.round(today.main.temp) >= 15
+                ? 'text-red-500'
+                : 'text-blue-500'
+            }`}
+          >
+            {Math.round(today.main.temp)}°
+          </h1>
           <div className="flex flex-col">
             <img
               src={`${iconURL}${today.weather[0].icon}@2x.png`}
@@ -82,7 +91,17 @@ const Forecast = ({ data }: Props): JSX.Element => {
               alt={`weather-icon-${item.weather[0].description}`}
               src={`${iconURL}${item.weather[0].icon}@2x.png`}
             />
-            <p className="text-sm font-bold">{Math.round(item.main.temp)}°</p>
+            <p
+              className={`text-sm font-bold ${
+                unit === 'metric' && Math.round(item.main.temp) >= 15
+                  ? 'text-red-500'
+                  : unit === 'metric' && Math.round(item.main.temp) < 15
+                  ? 'text-blue-500'
+                  : ''
+              }`}
+            >
+              {Math.round(item.main.temp)}°
+            </p>
           </div>
         ))}
       </section>

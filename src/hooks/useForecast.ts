@@ -6,11 +6,11 @@ const useForecast = () => {
   const [options, setOptions] = useState<[]>([])
   const [location, setLocation] = useState<optionType | null>(null)
   const [forecast, setForecast] = useState<forecastType | null>(null)
-  const [unit, setUnit] = useState<string>('metric')
+  const [unit, setUnit] = useState<string | null>('metric')
 
-  //TODO Bug: Fix geolocation inaccuracy (if possible)
-  //TODO Bug: Fix unit after geolocation not using the default 'metric' value instead using the openweathermap's 'kelvin' default
+  //TODO Bug: Fix 'onSubmit' passing an object so 'getForecast' using wrong 'unit'
   //TODO Bug: Fix m/s => mi/h conversion at wind speed when changing from 'metric' to 'imperial'
+  //TODO Bug: Fix having to doubleclick on buttons to get the API call
   //TODO Feature: Add color indicator if any of the values are too high/low
   //TODO Feature: Add 'toastify' and setup properly to not overcrowd the screen
   //TODO Feature: Implement 'chart' for temperature
@@ -44,7 +44,7 @@ const useForecast = () => {
   {
     /* Get forecast from the API using latitude and longitude */
   }
-  const getForecast = (location: optionType, unit: string = 'metric') => {
+  const getForecast = (location: optionType) => {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=${unit}`
     )
@@ -61,10 +61,13 @@ const useForecast = () => {
       })
   }
 
-  const onSubmit = (unit: string = 'metric') => {
+  const onSubmit = (unit: string | null) => {
     if (!location) return
+    console.log(unit)
+    setUnit(unit)
+    setSearchInput('')
 
-    getForecast(location, unit)
+    getForecast(location)
   }
 
   {
@@ -99,7 +102,7 @@ const useForecast = () => {
         console.log(lat, lon)
 
         setLocation({ lat, lon })
-        getForecast({ lat, lon }, 'metric')
+        getForecast({ lat, lon })
       }
 
       const error = (err: any) => {
@@ -124,6 +127,7 @@ const useForecast = () => {
     onInputChange,
     onLocationSelect,
     onSubmit,
+    unit,
     onUnitSelect,
     handleLocationClick,
   }
