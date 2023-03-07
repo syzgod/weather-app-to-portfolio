@@ -10,7 +10,7 @@ const useForecast = () => {
 
   //TODO Bug: Fix 'onSubmit' passing an object so 'getForecast' using wrong 'unit'
   //TODO Bug: Fix m/s => mi/h conversion at wind speed when changing from 'metric' to 'imperial'
-  //TODO Bug: Fix having to doubleclick on buttons to get the API call
+  //TODO Bug: Fix having to double click on buttons to get the API call
   //TODO Feature: Add color indicator if any of the values are too high/low
   //TODO Feature: Add 'toastify' and setup properly to not overcrowd the screen
   //TODO Feature: Implement 'chart' for temperature
@@ -55,10 +55,15 @@ const useForecast = () => {
           list: data.list.slice(0, 16),
         }
         setForecast(forecastData)
+        console.log(forecastData)
       })
       .catch((err) => {
         alert(`Something went wrong, try again. ${err.message}`)
       })
+  }
+
+  {
+    /* Submit unit change or call user's location  */
   }
 
   const onSubmit = (unit: string | null) => {

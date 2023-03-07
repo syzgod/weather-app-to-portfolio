@@ -1,18 +1,50 @@
 import React from 'react'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts'
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from 'recharts'
 
-const ForecastChart = () => {
-  const data = [{ name: 'Page A', uv: 400, pv: 2400, amt: 2400 }]
+type forecastData = {
+  name: string
+  maxTemp: number
+  minTemp: number
+}
+
+const ForecastChart = ({ data }: any) => {
+  console.log(data)
+  const chartArray: any = []
+
+  data.list.map((interval: any): any => {
+    const forecastData: forecastData = {
+      name: `${new Date(interval.dt * 1000).getHours()}`,
+      maxTemp: Math.ceil(interval.main.temp_max),
+      minTemp: Math.floor(interval.main.temp_min),
+    }
+    chartArray.push(forecastData)
+    return forecastData
+  })
   return (
-    <div className="h-full w-full bg-zinc-600/20">
-      <LineChart width={600} height={300} data={data}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-        <Line type="monotone" dataKey="pv" stroke="#1884d1" />
-        <Line type="monotone" dataKey="amt" stroke="#8844d8" />
-        <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="name" />
-        <YAxis />
-      </LineChart>
+    <div className="h-full w-full rounded-xl bg-white bg-opacity-20">
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart
+          data={chartArray}
+          margin={{ top: 25, right: 20, bottom: 5, left: 0 }}
+        >
+          <Line type="monotone" dataKey="maxTemp" stroke="rgb(200, 80, 80)" />
+          <Line type="monotone" dataKey="minTemp" stroke="rgb(100, 80, 255)" />
+          <CartesianGrid stroke="#ccc" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   )
 }

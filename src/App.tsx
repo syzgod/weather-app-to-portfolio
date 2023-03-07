@@ -43,7 +43,7 @@ function App(): JSX.Element {
           onUnitSelect={onUnitSelect}
           handleLocationClick={handleLocationClick}
         />
-        <ForecastChart />
+        {forecast && <ForecastChart data={forecast} />}
       </div>
       {forecast && <Forecast data={forecast} unit={unit} />}
     </main>
