@@ -3,7 +3,7 @@
 
 ## Description
 
-As for my first bigger React project I chose the Weather app to properly learn and implement what I have learned. React using Hooks and TypeScript with API are the latest technologies used most of the places so it is wise to get familiar with them. I wanted a challenge to help me to understand how these technologies work.
+As for my first bigger React project I chose the Weather app to properly learn and implement what I have learned. React using Hooks and TypeScript with API are the latest technologies used most of the places so it is wise to get familiar with them. I wanted a challenge to help me understand how these technologies work. Had few bugs then introduced more as I added more features so I had plenty of debugging as a good exercise. The app itself is not perfect in fact far from it. I tried my best. There are a lot of improvements can be made. I chose to implement a basic chart also so I can play around with the data a bit more. I have to say I learned a lot from this project and I am more eager to start new projects.
 
 ## Inspired by few of the tutorials found online
 
