@@ -41,7 +41,7 @@ const useForecast = () => {
   {
     /* Get forecast from the API using latitude and longitude */
   }
-  const getForecast = (location: optionType) => {
+  const getForecast = (location: optionType, unit: 'metric' | 'imperial') => {
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${REACT_APP_API_KEY}&units=${unit}`
     )
@@ -62,16 +62,15 @@ const useForecast = () => {
     /* Submit unit change or call user's location  */
   }
 
-  const onUnitSubmit = (unit: 'metric' | 'imperial' = 'metric') => {
+  const onUnitSubmit = (value: 'metric' | 'imperial' = 'metric') => {
     if (!location) return
-    setUnit(unit)
-    onSearch()
+    setUnit(value)
+    // onSearch()
+    setSearchInput('')
+    getForecast(location, value)
   }
 
-  const onSearch = () => {
-    setSearchInput('')
-    getForecast(location)
-  }
+  // const onSearch = () => {}
 
   {
     /* Handle selected location from the options list*/
@@ -95,7 +94,7 @@ const useForecast = () => {
         const { latitude: lat, longitude: lon } = pos.coords
 
         setLocation({ lat, lon })
-        getForecast({ lat, lon })
+        getForecast({ lat, lon }, unit)
       }
 
       const error = (err: any) => {
@@ -122,7 +121,7 @@ const useForecast = () => {
     onUnitSubmit,
     unit,
     handleLocationClick,
-    onSearch,
+    // onSearch,
   }
 }
 

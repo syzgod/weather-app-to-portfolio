@@ -10,7 +10,7 @@ type Props = {
   onUnitSubmit: (value: 'metric' | 'imperial') => void
   handleLocationClick: () => void
   unit: 'metric' | 'imperial'
-  onSearch: () => void
+  // onSearch: () => void
 }
 
 const Search = ({
@@ -21,8 +21,8 @@ const Search = ({
   onUnitSubmit,
   handleLocationClick,
   unit,
-  onSearch,
-}: Props): JSX.Element => {
+}: // onSearch,
+Props): JSX.Element => {
   return (
     <section className="z-50 mb-3 flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
       {/* Title */}
@@ -74,7 +74,7 @@ const Search = ({
         </ul>
         <button
           className="cursor-pointer rounded-r-md border-2 border-zinc-100 py-1 px-1 text-zinc-100 hover:border-zinc-700 hover:text-zinc-700"
-          onClick={onSearch}
+          onClick={() => onUnitSubmit('metric')}
         >
           search
         </button>

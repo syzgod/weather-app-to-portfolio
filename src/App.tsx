@@ -15,7 +15,7 @@ function App(): JSX.Element {
     onUnitSubmit,
     handleLocationClick,
     unit,
-    onSearch,
+    // onSearch,
   } = useForecast()
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-2 overflow-scroll bg-gradient-to-br from-sky-400 via-rose-400 to-blue-700 lg:flex-row ">
@@ -42,7 +42,7 @@ function App(): JSX.Element {
           onUnitSubmit={onUnitSubmit}
           handleLocationClick={handleLocationClick}
           unit={unit}
-          onSearch={onSearch}
+          // onSearch={onSearch}
         />
         {forecast && <ForecastChart data={forecast} />}
       </div>
