@@ -17,7 +17,6 @@ type forecastData = {
 }
 
 const ForecastChart = ({ data }: any) => {
-  console.log(data)
   const chartArray: any = []
 
   data.list.map((interval: any): any => {

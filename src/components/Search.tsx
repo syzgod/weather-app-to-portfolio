@@ -1,5 +1,5 @@
 import { optionType } from '../types'
-import { ChangeEvent, MouseEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { MdLocationPin } from 'react-icons/md'
 
 type Props = {
@@ -7,9 +7,10 @@ type Props = {
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void
   options: []
   onLocationSelect: (option: optionType) => void
-  onSubmit: (unit: any) => void
-  onUnitSelect: (value: string) => void
+  onUnitSubmit: (value: 'metric' | 'imperial') => void
   handleLocationClick: () => void
+  unit: 'metric' | 'imperial'
+  onSearch: () => void
 }
 
 const Search = ({
@@ -17,15 +18,11 @@ const Search = ({
   onInputChange,
   options,
   onLocationSelect,
-  onSubmit,
-  onUnitSelect,
+  onUnitSubmit,
   handleLocationClick,
+  unit,
+  onSearch,
 }: Props): JSX.Element => {
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    let unit = e.currentTarget.name
-    onSubmit(unit)
-  }
-
   return (
     <section className="z-50 mb-3 flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
       {/* Title */}
@@ -77,7 +74,7 @@ const Search = ({
         </ul>
         <button
           className="cursor-pointer rounded-r-md border-2 border-zinc-100 py-1 px-1 text-zinc-100 hover:border-zinc-700 hover:text-zinc-700"
-          onClick={onSubmit}
+          onClick={onSearch}
         >
           search
         </button>
@@ -91,17 +88,19 @@ const Search = ({
           </button>
           <p className="mx-2 text-2xl text-gray-200">|</p>
           <button
-            name="metric"
-            className="text-2xl text-gray-200 transition ease-out hover:scale-150"
-            onClick={onClick}
+            className={`text-2xl text-gray-200 transition ease-out hover:scale-150 ${
+              unit === 'metric' ? ' text-zinc-700' : ''
+            }`}
+            onClick={() => onUnitSubmit('metric')}
           >
             C°
           </button>
           <p className="mx-2 text-2xl text-gray-200">|</p>
           <button
-            name="imperial"
-            className="text-2xl text-gray-200 transition ease-out hover:scale-150"
-            onClick={onClick}
+            className={`text-2xl text-gray-200 transition ease-out hover:scale-150 ${
+              unit === 'imperial' ? ' text-zinc-700' : ''
+            }`}
+            onClick={() => onUnitSubmit('imperial')}
           >
             F°
           </button>

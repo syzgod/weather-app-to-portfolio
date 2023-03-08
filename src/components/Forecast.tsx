@@ -20,7 +20,7 @@ import {
 
 type Props = {
   data: forecastType
-  unit: string | null
+  unit: 'metric' | 'imperial'
 }
 
 const Forecast = ({ data, unit }: Props): JSX.Element => {

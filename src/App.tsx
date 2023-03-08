@@ -12,13 +12,13 @@ function App(): JSX.Element {
     forecast,
     onInputChange,
     onLocationSelect,
-    onSubmit,
-    unit,
-    onUnitSelect,
+    onUnitSubmit,
     handleLocationClick,
+    unit,
+    onSearch,
   } = useForecast()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-2 overflow-scroll bg-gradient-to-br from-sky-400 via-rose-400 to-lime-400 lg:flex-row ">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-2 overflow-scroll bg-gradient-to-br from-sky-400 via-rose-400 to-blue-700 lg:flex-row ">
       <ToastContainer
         limit={4}
         transition={Flip}
@@ -39,9 +39,10 @@ function App(): JSX.Element {
           options={options}
           onInputChange={onInputChange}
           onLocationSelect={onLocationSelect}
-          onSubmit={onSubmit}
-          onUnitSelect={onUnitSelect}
+          onUnitSubmit={onUnitSubmit}
           handleLocationClick={handleLocationClick}
+          unit={unit}
+          onSearch={onSearch}
         />
         {forecast && <ForecastChart data={forecast} />}
       </div>

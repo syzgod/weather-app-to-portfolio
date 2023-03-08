@@ -2,28 +2,25 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import { optionType, forecastType } from '../types'
 
 const useForecast = () => {
+  const REACT_APP_API_KEY = 'd5bb22a0a83465db34afc639b332703c'
+
   const [searchInput, setSearchInput] = useState<any>('')
   const [options, setOptions] = useState<[]>([])
-  const [location, setLocation] = useState<optionType | null>(null)
+  const [location, setLocation] = useState<optionType>({} as optionType)
   const [forecast, setForecast] = useState<forecastType | null>(null)
-  const [unit, setUnit] = useState<string | null>('metric')
+  const [unit, setUnit] = useState<'metric' | 'imperial'>('metric')
 
-  //TODO Bug: Fix 'onSubmit' passing an object so 'getForecast' using wrong 'unit'
+  //TODO Bug: Fix 'onUnitSubmit' passing an object so 'getForecast' using wrong 'unit'
   //TODO Bug: Fix m/s => mi/h conversion at wind speed when changing from 'metric' to 'imperial'
-  //TODO Bug: Fix having to double click on buttons to get the API call
-  //TODO Feature: Add color indicator if any of the values are too high/low
   //TODO Feature: Add 'toastify' and setup properly to not overcrowd the screen
-  //TODO Feature: Implement 'chart' for temperature
-  //TODO Feature: Add indicator which unit(C/F) is active
+  //TODO Feature: Extend 'chart' for temperature
 
   {
     /* API call for multiple locations with the same name from search input */
   }
   const getSearchValue = (value: string) => {
     fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${
-        process.env.REACT_APP_API_KEY
-      }`
+      `http://api.openweathermap.org/geo/1.0/direct?q=${value.trim()}&limit=5&appid=${REACT_APP_API_KEY}`
     )
       .then((res) => res.json())
       .then((data) => setOptions(data))
@@ -46,7 +43,7 @@ const useForecast = () => {
   }
   const getForecast = (location: optionType) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${process.env.REACT_APP_API_KEY}&units=${unit}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${location.lat}&lon=${location.lon}&appid=${REACT_APP_API_KEY}&units=${unit}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -55,7 +52,6 @@ const useForecast = () => {
           list: data.list.slice(0, 16),
         }
         setForecast(forecastData)
-        console.log(forecastData)
       })
       .catch((err) => {
         alert(`Something went wrong, try again. ${err.message}`)
@@ -66,12 +62,14 @@ const useForecast = () => {
     /* Submit unit change or call user's location  */
   }
 
-  const onSubmit = (unit: string | null) => {
+  const onUnitSubmit = (unit: 'metric' | 'imperial' = 'metric') => {
     if (!location) return
-    console.log(unit)
     setUnit(unit)
-    setSearchInput('')
+    onSearch()
+  }
 
+  const onSearch = () => {
+    setSearchInput('')
     getForecast(location)
   }
 
@@ -81,15 +79,6 @@ const useForecast = () => {
 
   const onLocationSelect = (option: optionType) => {
     setLocation(option)
-  }
-
-  {
-    /* Get the units(metric, imperial) from the buttons we choose */
-  }
-
-  const onUnitSelect = (value: string) => {
-    console.log(value)
-    setUnit(value)
   }
 
   {
@@ -104,7 +93,6 @@ const useForecast = () => {
       }
       const success = (pos: any) => {
         const { latitude: lat, longitude: lon } = pos.coords
-        console.log(lat, lon)
 
         setLocation({ lat, lon })
         getForecast({ lat, lon })
@@ -131,10 +119,10 @@ const useForecast = () => {
     forecast,
     onInputChange,
     onLocationSelect,
-    onSubmit,
+    onUnitSubmit,
     unit,
-    onUnitSelect,
     handleLocationClick,
+    onSearch,
   }
 }
 
