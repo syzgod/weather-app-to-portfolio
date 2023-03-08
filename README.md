@@ -9,7 +9,7 @@ As for my first bigger React project I chose the Weather app to properly learn a
 
 ### Technologies used:
 
-<img src='https://img.shields.io/badge/-React-9cf' alt='react-bacge'/>  <img src='https://img.shields.io/badge/-TypeScript-blue' alt='typescript-badge'/> <img src='https://img.shields.io/badge/-JavaScript-yellow' alt='javascript-badge'/> <img src='https://img.shields.io/badge/-HTML-orange' alt='html-badge'/> <img src='https://img.shields.io/badge/-Tailwind%20CSS-blue' alt='tailwind-css-badge'/>
+<img src='https://img.shields.io/badge/-React-9cf' alt='react-bacge'/>  <img src='https://img.shields.io/badge/-TypeScript-blue' alt='typescript-badge'/> <img src='https://badges.aleen42.com/src/javascript.svg' alt='javascript-badge'/> <img src='https://img.shields.io/badge/-HTML-orange' alt='html-badge'/> <img src='https://img.shields.io/badge/-Tailwind%20CSS-blue' alt='tailwind-css-badge'/>
 
 ### Things I learned:
 - How to work with React, React components using Props and State
