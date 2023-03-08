@@ -26,7 +26,7 @@ type Props = {
 const Forecast = ({ data, unit }: Props): JSX.Element => {
   const today = data.list[0]
 
-  const iconURL = `http://openweathermap.org/img/wn/`
+  const iconURL = `https://openweathermap.org/img/wn/`
 
   return (
     <div className="flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
