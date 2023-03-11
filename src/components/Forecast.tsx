@@ -29,7 +29,7 @@ const Forecast = ({ data, unit }: Props): JSX.Element => {
   const iconURL = `https://openweathermap.org/img/wn/`
 
   return (
-    <div className="flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
+    <div className="mb-2 flex min-h-fit max-w-[360px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:max-w-[500px] lg:max-w-[650px]">
       <section className="text-center">
         <h2 className="flex items-center justify-center text-4xl font-black">
           {data.city.name}
@@ -60,7 +60,7 @@ const Forecast = ({ data, unit }: Props): JSX.Element => {
             <img
               src={`${iconURL}${today.weather[0].icon}@2x.png`}
               alt={`${today.weather[0].main.toLowerCase()}-weather-icon`}
-              className="inline-block"
+              className="inline-block max-w-xl"
             />
             <p className="-mt-4 capitalize">{today.weather[0].description}</p>
           </div>
@@ -78,7 +78,7 @@ const Forecast = ({ data, unit }: Props): JSX.Element => {
       </section>
 
       {/* Forecast every 3 hours */}
-      <section className="backdrop-blur-ls mt-10 mb-5 flex w-[350px] justify-start overflow-x-scroll rounded bg-white/20 pb-2 sm:w-[600px]">
+      <section className="backdrop-blur-ls mt-10 mb-5 flex max-w-[340px] justify-start overflow-x-scroll rounded bg-white/20 pb-2 md:max-w-[480px] lg:max-w-[620px]">
         {data.list.map((item, i) => (
           <div
             key={i}

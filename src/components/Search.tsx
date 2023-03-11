@@ -10,7 +10,6 @@ type Props = {
   onUnitSubmit: (value: 'metric' | 'imperial') => void
   handleLocationClick: () => void
   unit: 'metric' | 'imperial'
-  // onSearch: () => void
 }
 
 const Search = ({
@@ -21,10 +20,9 @@ const Search = ({
   onUnitSubmit,
   handleLocationClick,
   unit,
-}: // onSearch,
-Props): JSX.Element => {
+}: Props): JSX.Element => {
   return (
-    <section className="z-50 mb-3 flex min-h-fit max-w-[640px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:w-[750px]">
+    <section className="z-50 mb-3 mt-3 flex h-full max-w-[360px] flex-col items-center justify-center rounded-xl bg-white bg-opacity-20 p-4 text-center text-zinc-700 drop-shadow-lg backdrop-blur-lg md:max-w-[500px]">
       {/* Title */}
       <h1 className="text-6xl font-thin">
         Weather <span className="font-black">Forecast</span>
@@ -33,14 +31,49 @@ Props): JSX.Element => {
         Type the location you are looking for and select from the dropdown then
         press Search
       </p>
-      <div className="relative mt-4 flex justify-center md:mt-4">
-        {/* Search input */}
-        <input
-          type="text"
-          value={searchInput}
-          className="min-w-fit rounded-l-md border-2 border-white px-2 py-1"
-          onChange={onInputChange}
-        />
+      <div className="relative m-4 flex flex-row items-center justify-center ">
+        <div className="mr-2 flex justify-center">
+          {/* Search input */}
+          <input
+            type="text"
+            value={searchInput}
+            className="w-full rounded-l-md border-2 border-white px-2 py-1"
+            onChange={onInputChange}
+          />
+          <button
+            className="cursor-pointer rounded-r-md border-2 border-zinc-100 py-1 px-1 text-zinc-100 hover:border-zinc-700 hover:text-zinc-700"
+            onClick={() => onUnitSubmit('metric')}
+          >
+            search
+          </button>
+        </div>
+        <div className="ml-4 flex w-1/4 flex-row items-center justify-center">
+          <button>
+            <MdLocationPin
+              size={25}
+              className="ml-1 text-gray-200 transition ease-out hover:scale-150"
+              onClick={handleLocationClick}
+            />
+          </button>
+          <p className="mx-2 text-2xl text-gray-200">|</p>
+          <button
+            className={`text-2xl text-gray-200 transition ease-out hover:scale-150 ${
+              unit === 'metric' ? ' text-zinc-700' : ''
+            }`}
+            onClick={() => onUnitSubmit('metric')}
+          >
+            C°
+          </button>
+          <p className="mx-2 text-2xl text-gray-200">|</p>
+          <button
+            className={`text-2xl text-gray-200 transition ease-out hover:scale-150 ${
+              unit === 'imperial' ? ' text-zinc-700' : ''
+            }`}
+            onClick={() => onUnitSubmit('imperial')}
+          >
+            F°
+          </button>
+        </div>
         {/* Search results after API call */}
         <ul className="absolute top-9 left-1.5 overflow-hidden rounded-md bg-white">
           {options.length > 0 &&
@@ -72,39 +105,6 @@ Props): JSX.Element => {
               </li>
             ))}
         </ul>
-        <button
-          className="cursor-pointer rounded-r-md border-2 border-zinc-100 py-1 px-1 text-zinc-100 hover:border-zinc-700 hover:text-zinc-700"
-          onClick={() => onUnitSubmit('metric')}
-        >
-          search
-        </button>
-        <div className="ml-4 flex w-1/4 flex-row items-center justify-center">
-          <button>
-            <MdLocationPin
-              size={25}
-              className="ml-1 text-gray-200 transition ease-out hover:scale-150"
-              onClick={handleLocationClick}
-            />
-          </button>
-          <p className="mx-2 text-2xl text-gray-200">|</p>
-          <button
-            className={`text-2xl text-gray-200 transition ease-out hover:scale-150 ${
-              unit === 'metric' ? ' text-zinc-700' : ''
-            }`}
-            onClick={() => onUnitSubmit('metric')}
-          >
-            C°
-          </button>
-          <p className="mx-2 text-2xl text-gray-200">|</p>
-          <button
-            className={`text-2xl text-gray-200 transition ease-out hover:scale-150 ${
-              unit === 'imperial' ? ' text-zinc-700' : ''
-            }`}
-            onClick={() => onUnitSubmit('imperial')}
-          >
-            F°
-          </button>
-        </div>
       </div>
     </section>
   )

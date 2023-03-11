@@ -65,12 +65,9 @@ const useForecast = () => {
   const onUnitSubmit = (value: 'metric' | 'imperial' = 'metric') => {
     if (!location) return
     setUnit(value)
-    // onSearch()
     setSearchInput('')
     getForecast(location, value)
   }
-
-  // const onSearch = () => {}
 
   {
     /* Handle selected location from the options list*/
@@ -121,7 +118,6 @@ const useForecast = () => {
     onUnitSubmit,
     unit,
     handleLocationClick,
-    // onSearch,
   }
 }
 

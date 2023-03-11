@@ -30,13 +30,25 @@ const ForecastChart = ({ data }: any) => {
   })
   return (
     <div className="h-full w-full rounded-xl bg-white bg-opacity-20">
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="95%" height={300}>
         <LineChart
           data={chartArray}
-          margin={{ top: 25, right: 20, bottom: 5, left: 0 }}
+          margin={{ top: 25, right: 5, bottom: 5, left: -15 }}
         >
-          <Line type="monotone" dataKey="maxTemp" stroke="rgb(200, 80, 80)" />
-          <Line type="monotone" dataKey="minTemp" stroke="rgb(100, 80, 255)" />
+          <Line
+            type="monotone"
+            dataKey="maxTemp"
+            stroke="rgb(200, 80, 80)"
+            strokeWidth={2}
+            connectNulls
+          />
+          <Line
+            type="monotone"
+            dataKey="minTemp"
+            stroke="rgb(100, 80, 255)"
+            strokeWidth={2}
+            connectNulls
+          />
           <CartesianGrid stroke="#ccc" />
           <XAxis dataKey="name" />
           <YAxis />
